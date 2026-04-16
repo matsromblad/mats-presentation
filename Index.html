@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mats Romblad - System Diagnostics</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --text: #c9d1d9;
+            --accent: #58a6ff;
+            --error: #f85149;
+            --success: #3fb950;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: auto; }
+        .header { border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 30px; }
+        .glitch { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
+        
+        .card { 
+            background: #161b22; 
+            border: 1px solid #30363d; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            border-left: 4px solid var(--accent);
+        }
+        .bug { border-left-color: var(--error); }
+        
+        .status-on { color: var(--success); font-weight: bold; }
+        .tag { background: #21262d; padding: 2px 8px; border-radius: 5px; font-size: 0.8rem; }
+        
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 10px;
+        }
+        .hidden-content { display: none; padding-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="glitch">> RUN MATS_PRESENTATION.EXE</div>
+        <p>Location: Göteborg | Unit: WSP BIM | Status: <span class="status-on">ONLINE</span></p>
+    </div>
+
+    <div class="card">
+        <h3>[SYSTEM INFO]</h3>
+        <p><strong>Base:</strong> Knivsta (300m² Smart Home Lab)</p>
+        <p><strong>OS:</strong> BIM-strateg & Ingenjör (15+ years experience)</p>
+        <p><strong>Interests:</strong> Home Assistant, Python, IFC-Hacking, MacGyver-style parenting.</p>
+    </div>
+    
+    <div class="card">
+        <h3>[VERSION HISTORY]</h3>
+        <ul>
+            <li><strong>v.2025:</strong> WSP - BIM & Datasamordnare</li>
+            <li><strong>v.2013:</strong> Ramboll - Enhetschef & Samordnare</li>
+            <li><strong>v.2011:</strong> Skanska - Konstruktör</li>
+        </ul>
+        <p><small>Legacy Modules: Arlanda T5, Nya Karolinska, Trafikverket.</small></p>
+    </div>
+
+    <!-- Musik och galleri infogade för presentation -->
+    <div class="card">
+        <h3>[MUSIC]</h3>
+        <p>Min karriär i en 90-tals rap — spela upp under presentationen.</p>
+        <audio id="careerTrack" controls preload="none">
+            <source src="music/mellan_betong_och_gr_nt.mp3" type="audio/mpeg">
+            Din webbläsare stödjer inte audio-elementet.
+        </audio>
+        <div style="margin-top:10px;">
+            <button id="playBtn">Spela</button>
+            <button id="pauseBtn">Pausa</button>
+            <button id="stopBtn">Stoppa</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>[BILDGALLERI]</h3>
+        <p>Använd bilder från mappen <strong>pics/</strong>. Klicka för att förstora.</p>
+        <div class="gallery" id="gallery">
+            <figure><img src="pics/PXL_20250614_100529839.jpg" alt="Bild 1"></figure>
+            <figure><img src="pics/PXL_20231213_170911900.jpg" alt="Bild 2"></figure>
+            <figure><img src="pics/IMG_20231227_084455.jpg" alt="Bild 3"></figure>
+            <figure><img src="pics/IMG_20210309_090706.jpg" alt="Bild 4"></figure>
+            <figure><img src="pics/IMG_1917.jpg" alt="Bild 5"></figure>
+            <figure><img src="pics/IMG20250729191421.jpg" alt="Bild 6"></figure>
+            <figure><img src="pics/DSC08553~2.JPG" alt="Bild 7"></figure>
+        </div>
+    </div>
+
+    <h3 style="color: var(--error);">[KNOWN BUGS - LOG FILE]</h3>
+    
+    <div class="card bug">
+        <strong>Error 404: Files Dissolved</strong>
+        <p><em>Incident:</em> Ny på Ramboll. Skulle kopiera filer via Chaos Desktop men råkade köra "Cut & Paste".</p>
+        <p><em>Impact:</em> Senior samordnare fick jobba över halva natten för att rädda databasen.</p>
+        <p><em>Patch:</em> Aldrig mer Drag-and-Drop utan att kolla rättigheter.</p>
+    </div>
+
+    <div class="card bug">
+        <strong>Error 500: Logical Recruitment Failure</strong>
+        <p><em>Incident:</em> Anställde en "stjärna" baserat på en klockren intervju och CV.</p>
+        <p><em>Impact:</em> Han var en mardröm att jobba med och levererade noll.</p>
+        <p><em>Patch:</em> Lita aldrig enbart på karisma – ring ALLTID referenser.</p>
+    </div>
+
+    <div class="card">
+        <h3>[HIDDEN FEATURES]</h3>
+        <p>Klicka för att se mina "Hacks" i arbetslivet:</p>
+        <button onclick="toggleHacks()">DECRYPT DATA</button>
+        <div id="hacks" class="hidden-content">
+            <p><strong>1. Automation over Repetition:</strong> Om jag måste göra det tre gånger, skriver jag ett skript för det.</p>
+            <p><em>...Fyll i dina andra två hacks här...</em></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleHacks() {
+        var x = document.getElementById("hacks");
+        var isHidden = window.getComputedStyle(x).display === "none";
+        x.style.display = isHidden ? "block" : "none";
+    }
+
+    // Audio controls
+    (function(){
+        var audio = document.getElementById('careerTrack');
+        if (!audio) return;
+        var play = document.getElementById('playBtn');
+        var pause = document.getElementById('pauseBtn');
+        var stop = document.getElementById('stopBtn');
+        play.addEventListener('click', function(){ audio.play(); });
+        pause.addEventListener('click', function(){ audio.pause(); });
+        stop.addEventListener('click', function(){ audio.pause(); audio.currentTime = 0; });
+    })();
+
+    // Simple lightbox for gallery
+    (function(){
+        var gallery = document.getElementById('gallery');
+        if (!gallery) return;
+        var overlay = document.createElement('div');
+        overlay.id = 'lightbox';
+        overlay.style.position = 'fixed';
+        overlay.style.left = 0;
+        overlay.style.top = 0;
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.background = 'rgba(0,0,0,0.9)';
+        overlay.style.display = 'none';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.zIndex = 9999;
+        overlay.addEventListener('click', function(){ overlay.style.display = 'none'; overlay.innerHTML = ''; });
+        document.body.appendChild(overlay);
+
+        gallery.querySelectorAll('img').forEach(function(img){
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', function(e){
+                var large = document.createElement('img');
+                large.src = img.src;
+                large.style.maxWidth = '90%';
+                large.style.maxHeight = '90%';
+                overlay.innerHTML = '';
+                overlay.appendChild(large);
+                overlay.style.display = 'flex';
+            });
+        });
+    })();
+</script>
+
+<style>
+    /* Gallery styles */
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 10px; }
+    .gallery figure { margin: 0; background: #0b0e12; padding: 6px; border-radius: 6px; }
+    .gallery img { width: 100%; height: 110px; object-fit: cover; display: block; border-radius: 4px; }
+    @media (min-width: 900px) { .gallery img { height: 150px; } }
+
+</style>
+
+</body>
+</html>
